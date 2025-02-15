@@ -757,8 +757,8 @@ game.ReplicatedStorage.GameData.LatestRoom.Changed:connect(function(newvalue)
             game.ReplicatedStorage.GameData.LatestRoom.Changed:wait()
 
             game.ReplicatedStorage.GameData.LatestRoom.Changed:wait()
-            game.Lighting.FogEnd = 10000
-            game.Lighting.FogStart = 0
+            game.Lighting.FogEnd = 50
+            game.Lighting.FogStart = 100
             game.Lighting.FogColor = Color3.fromRGB(0,0,0)
             wh:Destroy()
         end)
