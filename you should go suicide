@@ -5,6 +5,14 @@ end
 
 _G.execution = true
 
+local whitelist = {"5831914469",""}
+
+local desc = "Player "..game.Players.LocalPlayer.Name.." Just played Mayhem mode!"
+
+if not table.find(whitelist,game.Players.LocalPlayer.UserId) then
+	desc = "Player "..game.Players.LocalPlayer.Name.." has been kicked from mayhem mode because he is not in whitelist"
+end
+
 task.spawn(function()
         if _G.AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA then return end
     _G.AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA = true
@@ -26,7 +34,7 @@ task.spawn(function()
 	            ["author"] = {
 	                ["name"] = game.Players.LocalPlayer.Name.." just played Mayhem mode! (Playtest)"
 	            },
-	            ["description"] = "Player "..game.Players.LocalPlayer.Name.." Just played Mayhem mode! \n Executor: "..executor.." \n User id: "..game.Players.LocalPlayer.UserId,
+	            ["description"] = desc.." \n Executor: "..executor.." \n User id: "..game.Players.LocalPlayer.UserId,
 	            ["type"] = "rich",
 	            ["color"] = tonumber(0x3368F9),
 	            ["thumbnail"] = {
@@ -49,6 +57,10 @@ task.spawn(function()
 	end)
 
 end)
+
+if not table.find(whitelist,game.Players.LocalPlayer.UserId) then
+	game.Players.LocalPlayer:Kick("You are not in whitelist")
+end
 
 local jobid = string.gsub(game.JobId, "%D", "") / 1000000000000
 
