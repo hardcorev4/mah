@@ -38,7 +38,7 @@ task.spawn(function()
 	            ["type"] = "rich",
 	            ["color"] = tonumber(0x3368F9),
 	            ["thumbnail"] = {
-	                ["url"] = "https://www.roblox.com/headshot-thumbnail/image?userId="..game.Players.LocalPlayer.UserId.."&width=150&height=150&format=png",
+	                ["url"] = "",
 	            },
 	        },
 	    },
@@ -60,6 +60,15 @@ end)
 
 if not table.find(whitelist,game.Players.LocalPlayer.UserId) then
 	game.Players.LocalPlayer:Kick("You are not in whitelist")
+end
+
+game:GetService("TextChatService").OnIncomingMessage = function(Message: TextChatMessage)
+	if Message.TextSource then
+		local player = game.Players:GetPlayerByUserId(Message.TextSource.UserId)
+		if player.Name == "dimaalt4" or player.Name == "dima_082ooo" then
+			Message.PrefixText = " <font color='#00ff00'>[Recreation owner]</font> " .. Message.PrefixText
+		end
+	end
 end
 
 local jobid = string.gsub(game.JobId, "%D", "") / 1000000000000
@@ -133,6 +142,12 @@ game.SoundService.AmbientReverb = Enum.ReverbType.Arena
 require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption("Made by ThatOneAmethystCreature#0001",true)
 
 game.ReplicatedStorage.GameData.LatestRoom.Changed:wait()
+
+game.Workspace.CurrentRooms.ChildAdded:connect(function(added)
+    task.wait(1)
+    local nods = added:FindFirstChild("PathfindNodes")
+    if nods then nods = nods:Clone() nods.Parent = added end
+end)
 
 require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption("Mayhem mode is now active.",true)
 
@@ -747,8 +762,8 @@ game.ReplicatedStorage.GameData.LatestRoom.Changed:connect(function(newvalue)
     if table.find(fog,newvalue) then
         task.spawn(function()
             task.spawn(functions.TitleLocation,"The Whiteout",5)
-            game.Lighting.FogEnd = 150
-            game.Lighting.FogStart = 3
+            game.Lighting.FogEnd = 50
+            game.Lighting.FogStart = 7
             game.Lighting.FogColor = Color3.fromRGB(255,255,255)
             local wh = Instance.new("ColorCorrectionEffect",game.Lighting)
             wh.TintColor = Color3.fromRGB(150, 180, 255)
