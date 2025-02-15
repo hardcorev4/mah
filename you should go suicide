@@ -102,7 +102,7 @@ for i = 0,6,1 do
     table.insert(obs,obsr:NextInteger(i,100))
 end
 
-for i = 0,5,1 do
+for i = 0,4,1 do
     table.insert(twis,twisr:NextInteger(i,100))
 end
 
@@ -118,7 +118,7 @@ for i = 0,1,1 do
     table.insert(eys,100)
 end
 
-for i = 0,2,1 do
+for i = 20,22,1 do
     table.insert(ambsh,ambshr:NextInteger(i,100))
 end
 
@@ -175,7 +175,7 @@ game.ReplicatedStorage.GameData.LatestRoom.Changed:connect(function(newvalue)
     end
     if table.find(twis,newvalue) then
         task.spawn(function()
-            local randomsec = Random.new((game.ReplicatedStorage.GameData.GameSeed.Value + game.ReplicatedStorage.GameData.LatestRoom.Value) * 2)
+            local randomsec = Random.new((game.ReplicatedStorage.GameData.GameSeed.Value + (game.ReplicatedStorage.GameData.LatestRoom.Value * 10000000)) * 2)
 
             task.wait(randomsec:NextInteger(3, 7))
 
@@ -242,7 +242,7 @@ game.ReplicatedStorage.GameData.LatestRoom.Changed:connect(function(newvalue)
 
             game.ReplicatedStorage.GameData.LatestRoom.Changed:wait()
 
-            if randomsec:NextInteger(11,12) == 11 or true then
+            if randomsec:NextInteger(11,13) == 11 or true then
                 for i , sou in sounds do
                     local sound = Instance.new("Sound",game.Workspace)
                     sound.SoundId = LoadCustomSound(sou, "Twister_appear"..i)
@@ -289,7 +289,7 @@ game.ReplicatedStorage.GameData.LatestRoom.Changed:connect(function(newvalue)
                                 local magnitude = difference.Magnitude
 
                                 if magnitude > 0.1 then
-                                    twister:PivotTo(pivot + unit * math.min(step * 100, magnitude))
+                                    twister:PivotTo(pivot + unit * math.min(step * 120, magnitude))
                                 else
                                     connection:Disconnect()
                                     reached = true
@@ -361,7 +361,6 @@ game.ReplicatedStorage.GameData.LatestRoom.Changed:connect(function(newvalue)
                     end
                     Twistering:Destroy()
                 end)
-                game.ReplicatedStorage.GameData.LatestRoom.Changed:wait()
             end
         end)
     end
