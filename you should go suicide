@@ -176,6 +176,7 @@ require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption("
 game.ReplicatedStorage.GameData.LatestRoom.Changed:connect(function(newvalue)
     if table.find(obs,newvalue) then
         task.spawn(function()
+            if game.Workspace:FindFirstChild("SeekMovingNewClone") then return end
             task.wait(1)
             local lastroom = game.Workspace.CurrentRooms:GetChildren()[#game.Workspace.CurrentRooms:GetChildren() -1]
             local obessionn = LoadCustomInstance("https://github.com/Jahani-john/mayhem-mode/raw/refs/heads/main/mayhemmode-main/Greed.Obssesion.rbxm", "Obession_model")
@@ -208,7 +209,8 @@ game.ReplicatedStorage.GameData.LatestRoom.Changed:connect(function(newvalue)
     end
     if table.find(twis,newvalue) then
         task.spawn(function()
-            local randomsec = Random.new((game.ReplicatedStorage.GameData.GameSeed.Value + (game.ReplicatedStorage.GameData.LatestRoom.Value * 10000000)) * 2)
+            if game.Workspace:FindFirstChild("SeekMovingNewClone") then return end
+            local randomsec = Random.new((game.ReplicatedStorage.GameData.GameSeed.Value + (game.ReplicatedStorage.GameData.LatestRoom.Value * 10000000)) * 2.489)
 
             task.wait(randomsec:NextInteger(3, 7))
 
@@ -275,7 +277,7 @@ game.ReplicatedStorage.GameData.LatestRoom.Changed:connect(function(newvalue)
 
             game.ReplicatedStorage.GameData.LatestRoom.Changed:wait()
 
-            if randomsec:NextInteger(11,13) == 11 or true then
+            if randomsec:NextInteger(11,12) == 11 then
                 for i , sou in sounds do
                     local sound = Instance.new("Sound",game.Workspace)
                     sound.SoundId = LoadCustomSound(sou, "Twister_appear"..i)
@@ -355,6 +357,8 @@ game.ReplicatedStorage.GameData.LatestRoom.Changed:connect(function(newvalue)
                                     contact:Disconnect()
                                     twister:SetAttribute("Paused",false)
                                     jumpscare:Destroy()
+                                    game.Players.LocalPlayer.Character.Humanoid.Health = 0
+                                    game.ReplicatedStorage.GameStats["Player_".. game.Players.LocalPlayer.Name].Total.DeathCause.Value = "Twister"
                                 end
                             end
                         end
@@ -399,6 +403,7 @@ game.ReplicatedStorage.GameData.LatestRoom.Changed:connect(function(newvalue)
     end
     if table.find(blck,newvalue) then
         task.spawn(function()
+            if game.Workspace:FindFirstChild("SeekMovingNewClone") then return end
             local damaged = false
 
             local ui = game.CoreGui.ContactList
@@ -446,10 +451,10 @@ game.ReplicatedStorage.GameData.LatestRoom.Changed:connect(function(newvalue)
                 end
             end)
 
-            task.wait(4)
+            task.wait(3)
             soundj:Play()
 
-            task.wait(8)
+            task.wait(5)
 
             frame:Destroy()
             image:Destroy()
@@ -461,6 +466,7 @@ game.ReplicatedStorage.GameData.LatestRoom.Changed:connect(function(newvalue)
     end
     if table.find(thr,newvalue) then
         task.spawn(function()
+            if game.Workspace:FindFirstChild("SeekMovingNewClone") then return end
             task.wait(2)
 
             local kill = false
@@ -538,7 +544,7 @@ game.ReplicatedStorage.GameData.LatestRoom.Changed:connect(function(newvalue)
                                     game.Workspace.CurrentCamera.CFrame = CFrame.lookAt(game.workspace.currentCamera.CFrame.Position, Threat.Position)
                                 end
                             end)
-                            task.wait(1)
+                            task.wait(2)
                             Model:Destroy()
                             correction:Destroy()
                             game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = false
@@ -595,6 +601,7 @@ game.ReplicatedStorage.GameData.LatestRoom.Changed:connect(function(newvalue)
     end
     if table.find(rsh,newvalue) then
         task.spawn(function()
+            if game.Workspace:FindFirstChild("SeekMovingNewClone") then return end
             task.wait(1)
 
             for _ , v in game.Workspace.CurrentRooms:GetChildren() do
@@ -646,7 +653,7 @@ game.ReplicatedStorage.GameData.LatestRoom.Changed:connect(function(newvalue)
                 end
             end)
 
-            task.wait(4)
+            task.wait(5)
 
                 for i = 1,#game.workspace.CurrentRooms:GetChildren(),1 do
                     local room = game.workspace.CurrentRooms:GetChildren()[i]
@@ -684,6 +691,7 @@ game.ReplicatedStorage.GameData.LatestRoom.Changed:connect(function(newvalue)
     end
     if table.find(ambsh,newvalue) then
         task.spawn(function()
+            if game.Workspace:FindFirstChild("SeekMovingNewClone") then return end
             task.wait(2)
 
             local kill = false
