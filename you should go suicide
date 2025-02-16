@@ -762,18 +762,18 @@ game.ReplicatedStorage.GameData.LatestRoom.Changed:connect(function(newvalue)
     if table.find(fog,newvalue) then
         task.spawn(function()
             task.spawn(functions.TitleLocation,"The Whiteout",5)
-            game.Lighting.FogEnd = 50
-            game.Lighting.FogStart = 7
+            game.Lighting.FogEnd = 30
+            game.Lighting.FogStart = 4
             game.Lighting.FogColor = Color3.fromRGB(255,255,255)
             local wh = Instance.new("ColorCorrectionEffect",game.Lighting)
             wh.TintColor = Color3.fromRGB(150, 180, 255)
-            wh.Contrast = 2
+            wh.Contrast = 0.5
             wh.Brightness = 1
             game.ReplicatedStorage.GameData.LatestRoom.Changed:wait()
 
             game.ReplicatedStorage.GameData.LatestRoom.Changed:wait()
-            game.Lighting.FogEnd = 50
-            game.Lighting.FogStart = 100
+            game.Lighting.FogEnd = 10000
+            game.Lighting.FogStart = 10000
             game.Lighting.FogColor = Color3.fromRGB(0,0,0)
             wh:Destroy()
         end)
