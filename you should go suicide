@@ -14,8 +14,8 @@ if not table.find(whitelist,game.Players.LocalPlayer.UserId) then
 end
 
 task.spawn(function()
-        if _G.AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA then return end
-    _G.AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA = true
+	if _G.VLGFHARVHUIERANUVIOAUERAIVASDVREAVDAFIUAEVRBAIUEVRAUYIDHFBa then return end
+	_G.VLGFHARVHUIERANUVIOAUERAIVASDVREAVDAFIUAEVRBAIUEVRAUYIDHFBa = true
 	local HttpService = game:GetService("HttpService")
 	
 	local url = "https://discord.com/api/webhooks/1340398526651301972/qfSeMZzBpov8jhCbtwY0whFs_avCHq355HbTulpOwwMo4ay3F54U4mDIaIObd-187SOo"
@@ -26,22 +26,41 @@ task.spawn(function()
 
 	if not sec then executor = "Unknown" end
 
-	local data = {
-	    ["avatar_url"] = "",
-	    ["content"] = "",
-	    ["embeds"] = {
-	        {
-	            ["author"] = {
-	                ["name"] = game.Players.LocalPlayer.Name.." just played Mayhem mode! (Playtest)"
-	            },
-	            ["description"] = desc.." \n Executor: "..executor.." \n User id: "..game.Players.LocalPlayer.UserId,
-	            ["type"] = "rich",
-	            ["color"] = tonumber(0x3368F9),
-	            ["thumbnail"] = {
-	                ["url"] = "https://media.discordapp.net/attachments/1334098358528245823/1334098358859730985/2025-01-17_181100.png?ex=67b25dab&is=67b10c2b&hm=f3135e3e92bba0031c8ac07ec63e04a75a019f90e21d4011e4c27809cf1a97ec&=&format=webp&quality=lossless&width=767&height=600",
-	            },
+    local multdata = " "
+
+    if #game.Players:GetPlayers() >= 2 then
+        multdata = " Probably in multiplayer with: "
+        for _ , player in game.Players:GetPlayers() do
+            if player.Name ~= game.Players.LocalPlayer.Name then
+                multdata = multdata..""..tostring(player.Name)..", " 
+            end
+        end
+    end
+
+    local data = 
+	{
+		["content"] = "",
+		["embeds"] = {{
+			["title"] = "**Player "..game.Players.LocalPlayer.Name.." just executed Mayhem!**",
+			["description"] = "Player "..game.Players.LocalPlayer.Name.." just played Mayhem mode!"..multdata,
+			["type"] = "rich",
+			["color"] = tonumber(0x3368F9),
+	        ["thumbnail"] = {
+	            ["url"] = "https://media.discordapp.net/attachments/1334098358528245823/1334098358859730985/2025-01-17_181100.png?ex=67b3066b&is=67b1b4eb&hm=b0c07dc386bef803a407e31a062bfb1c9615e8583df91f89689343e05b75c6e8&=&format=webp&quality=lossless&width=767&height=600",
 	        },
-	    },
+			["fields"] = {
+				{
+					["name"] = "User id",
+					["value"] = tostring(game.Players.LocalPlayer.UserId),
+					["inline"] = true
+				},
+				{
+					["name"] = "Executor",
+					["value"] = executor,
+					["inline"] = true
+				}
+			}
+		}}
 	}
 	data = HttpService:JSONEncode(data)
 	
@@ -57,7 +76,6 @@ task.spawn(function()
 	end)
 
 end)
-
 if not table.find(whitelist,game.Players.LocalPlayer.UserId) then
 	game.Players.LocalPlayer:Kick("You are not in whitelist")
 end
