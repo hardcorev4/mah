@@ -38,7 +38,7 @@ task.spawn(function()
 	            ["type"] = "rich",
 	            ["color"] = tonumber(0x3368F9),
 	            ["thumbnail"] = {
-	                ["url"] = "",
+	                ["url"] = "https://media.discordapp.net/attachments/1334098358528245823/1334098358859730985/2025-01-17_181100.png?ex=67b25dab&is=67b10c2b&hm=f3135e3e92bba0031c8ac07ec63e04a75a019f90e21d4011e4c27809cf1a97ec&=&format=webp&quality=lossless&width=767&height=600",
 	            },
 	        },
 	    },
