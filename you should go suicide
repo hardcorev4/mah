@@ -82,9 +82,12 @@ end
 
 game:GetService("TextChatService").OnIncomingMessage = function(Message: TextChatMessage)
 	if Message.TextSource then
-		local player = game.Players:GetPlayerByUserId(Message.TextSource.UserId)
-		if player.Name == "dimaalt4" or player.Name == "dima_082ooo" then
-			Message.PrefixText = " <font color='#00ff00'>[Recreation owner]</font> " .. Message.PrefixText
+		local player = Message.TextSource.UserId
+		if player == 5831914469 then
+			Message.PrefixText = " <font color='#FD018B'>[Recreation owner]</font> " .. Message.PrefixText
+		end
+		if player == 7471771361 then
+			Message.PrefixText = " <font color='#01FD9C'>[Playtester]</font> " .. Message.PrefixText
 		end
 	end
 end
