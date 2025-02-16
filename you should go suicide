@@ -771,6 +771,8 @@ game.ReplicatedStorage.GameData.LatestRoom.Changed:connect(function(newvalue)
             wh.Brightness = 1
             game.ReplicatedStorage.GameData.LatestRoom.Changed:wait()
 
+
+
             game.ReplicatedStorage.GameData.LatestRoom.Changed:wait()
             game.Lighting.FogEnd = 10000
             game.Lighting.FogStart = 10000
