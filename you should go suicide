@@ -767,11 +767,77 @@ game.ReplicatedStorage.GameData.LatestRoom.Changed:connect(function(newvalue)
             game.Lighting.FogColor = Color3.fromRGB(255,255,255)
             local wh = Instance.new("ColorCorrectionEffect",game.Lighting)
             wh.TintColor = Color3.fromRGB(150, 180, 255)
-            wh.Contrast = 0.5
-            wh.Brightness = 1
+            wh.Contrast = 1
+            wh.Brightness = 0.5
+            task.wait(1.5)
+            game.Workspace.CurrentRooms["50"].FigureSetup.Ambience.SoundId = LoadCustomSound("https://github.com/localplayerr/Doors-stuff/raw/refs/heads/main/Mayhem%20mode%20recreate/Calm.MP3","Calmed")
             game.ReplicatedStorage.GameData.LatestRoom.Changed:wait()
 
+            task.wait(5)
 
+            task.spawn(function()
+                local kill = false
+
+                local fmodel = LoadCustomInstance("https://github.com/localplayerr/Doors-stuff/raw/refs/heads/main/Mayhem%20mode%20recreate/Foggy.rbxm","Foggy_model")
+                local fentity = fmodel.FogMonster
+
+                fmodel.Parent = game.Workspace
+
+                function FogMove(cframe)
+                        local reached = false
+                        local connection; connection = game:GetService("RunService").Stepped:Connect(function(_, step)
+                        local pivot = fentity:GetPivot()
+                        local difference = (cframe.Position - pivot.Position)
+                        local unit = difference.Unit
+                        local magnitude = difference.Magnitude
+
+                        if magnitude > 0.1 then
+                            fentity:PivotTo(pivot + unit * math.min(step * 25, magnitude))
+                        else
+                            connection:Disconnect()
+                            reached = true
+                        end
+                    end)
+                    repeat game:GetService("RunService").Stepped:Wait() until reached
+                end
+
+                local room = game.Workspace.CurrentRooms["50"]
+
+                print(room.Name)
+
+                fentity.CFrame = room.RoomExit.CFrame
+                local nodes = room.FigureSetup:FindFirstChild("FigureNodes")
+
+                task.spawn(function()
+                    while fmodel.Parent and task.wait() do
+                        local distance = (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - fentity.Position).Magnitude
+                        if distance < 75 then
+                            local magnet = 3/75*(75-distance)
+                            local roght = 20/75*(75-distance)
+                            require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).camShaker:ShakeOnce(magnet,roght, 0.1, 1)
+                        end
+                        local ray = game.Workspace:Raycast(fentity.Position, (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - fentity.Position).Unit * 50)
+                        if ray.Instance.Parent == game.Players.LocalPlayer.Character and kill == false and game.Players.LocalPlayer.Character:GetAttribute("Hiding") == false or ray.Instance.Parent.Parent == game.Players.LocalPlayer.Character and kill == false and game.Players.LocalPlayer.Character:GetAttribute("Hiding") == false then
+                            game.Players.LocalPlayer.Character.Humanoid.Health = 0
+                            firesignal(game.ReplicatedStorage.RemotesFolder.DeathHint.OnClientEvent, {"Oh... hello.","Not this place again...","Nevermind that... What'd you die to?","Oh… the white one.","It usually hiden in fog, so...","Maybe you could call it Fog?","Anyways, I hope you don't mind trying again. It would ne helpful."},"Yellow")
+                            game.ReplicatedStorage.GameStats["Player_".. game.Players.LocalPlayer.Name].Total.DeathCause.Value = "Fog"           
+                        end
+                    end
+                end)
+
+                task.spawn(function()
+                    while fmodel.Parent do
+                        if nodes then
+                            for _ , node in nodes:GetChildren() do
+                                if node.Parent then
+                                    FogMove(node.CFrame + Vector3.new(0,4,0))
+                                end
+                            end
+                        end
+                        task.wait()
+                    end
+                end)
+            end)
 
             game.ReplicatedStorage.GameData.LatestRoom.Changed:wait()
             game.Lighting.FogEnd = 10000
