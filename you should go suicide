@@ -5,7 +5,7 @@ end
 
 _G.execution = true
 
-local whitelist = {5831914469,7471771361}
+local whitelist = {5831914469,7471771361,371623915}
 
 local desc = "Player "..game.Players.LocalPlayer.Name.." Just played Mayhem mode!"
 
