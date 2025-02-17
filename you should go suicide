@@ -170,6 +170,8 @@ game.Workspace.CurrentRooms.ChildAdded:connect(function(added)
     if nods then nods = nods:Clone() nods.Parent = added end
 end)
 
+game.Players.LocalPlayer.Character:SetAttribute("Hiding",false)
+
 require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption("Mayhem mode is now active.",true)
 
 task.wait(3)
