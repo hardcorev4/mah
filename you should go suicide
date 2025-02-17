@@ -573,6 +573,7 @@ game.ReplicatedStorage.GameData.LatestRoom.Changed:connect(function(newvalue)
                     local room = game.workspace.CurrentRooms:GetChildren()[i]
                     if room and room:FindFirstChild("PathfindNodes") then
                         local noder = room.PathfindNodes:GetChildren()
+			if #noder > 0 then
                         table.sort(noder,function(a,b) return tonumber(a.Name) > tonumber(b.Name) end)
                         for _ , node in noder do
                             if node then
