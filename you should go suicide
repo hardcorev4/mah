@@ -327,7 +327,7 @@ game.ReplicatedStorage.GameData.LatestRoom.Changed:connect(function(newvalue)
                                 local magnitude = difference.Magnitude
 
                                 if magnitude > 0.1 then
-                                    twister:PivotTo(pivot + unit * math.min(step * 120, magnitude))
+                                    twister:PivotTo(pivot + unit * math.min(step * 130, magnitude))
                                 else
                                     connection:Disconnect()
                                     reached = true
@@ -513,7 +513,7 @@ game.ReplicatedStorage.GameData.LatestRoom.Changed:connect(function(newvalue)
                         local magnitude = difference.Magnitude
 
                         if magnitude > 0.1 then
-                            Threat:PivotTo(pivot + unit * math.min(step * 120, magnitude))
+                            Threat:PivotTo(pivot + unit * math.min(step * 130, magnitude))
                         else
                             connection:Disconnect()
                             reached = true
