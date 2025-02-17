@@ -5,13 +5,11 @@ end
 
 _G.execution = true
 
-local whitelist = {5831914469,7471771361,371623915}
+local function IsAlive()
+    if game.Players.LocalPlayer.Character.Humanoid.Health > 0 then return true end
+end
 
 local desc = "Player "..game.Players.LocalPlayer.Name.." Just played Mayhem mode!"
-
-if not table.find(whitelist,game.Players.LocalPlayer.UserId) then
-	desc = "Player "..game.Players.LocalPlayer.Name.." has been kicked from mayhem mode because he is not in whitelist"
-end
 
 task.spawn(function()
 	if _G.VLGFHARVHUIERANUVIOAUERAIVASDVREAVDAFIUAEVRBAIUEVRAUYIDHFBa then return end
@@ -76,9 +74,6 @@ task.spawn(function()
 	end)
 
 end)
-if not table.find(whitelist,game.Players.LocalPlayer.UserId) then
-	game.Players.LocalPlayer:Kick("You are not in whitelist")
-end
 
 local admins = {5831914469,371623915}
 
@@ -151,20 +146,6 @@ local functions = loadstring(game:HttpGet("https://github.com/localplayerr/Doors
 game.SoundService.AmbientReverb = Enum.ReverbType.Arena
 
 require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption("Made by ThatOneAmethystCreature#0001",true)
-
-game.ReplicatedStorage.GameData.LatestRoom.Changed:wait()
-
-game.Workspace.CurrentRooms.ChildAdded:connect(function(added)
-    task.wait(1)
-    local nods = added:FindFirstChild("PathfindNodes")
-    if nods then nods = nods:Clone() nods.Parent = added end
-end)
-
-game.Players.LocalPlayer.Character:SetAttribute("Hiding",false)
-
-local function IsAlive()
-    if game.Players.LocalPlayer.Character.Humanoid.Health > 0 then return true end
-end
 
 game:GetService("TextChatService").OnIncomingMessage = function(Message: TextChatMessage)
 	if Message.TextSource then
@@ -518,6 +499,15 @@ game:GetService("TextChatService").OnIncomingMessage = function(Message: TextCha
         end
 	end
 
+game.ReplicatedStorage.GameData.LatestRoom.Changed:wait()
+
+game.Workspace.CurrentRooms.ChildAdded:connect(function(added)
+    task.wait(1)
+    local nods = added:FindFirstChild("PathfindNodes")
+    if nods then nods = nods:Clone() nods.Parent = added end
+end)
+
+game.Players.LocalPlayer.Character:SetAttribute("Hiding",false)
 
 require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption("Mayhem mode is now active.",true)
 
