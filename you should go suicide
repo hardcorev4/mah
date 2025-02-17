@@ -90,7 +90,7 @@ local blckr = Random.new(jobid * 3)
 
 local obs = {}
 local twis = {}
-local thr = {3}
+local thr = {}
 local rsh = {}
 local eys = {}
 local ambsh = {}
