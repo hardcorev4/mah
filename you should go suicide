@@ -1,4 +1,3 @@
-
 if _G.execution then
     require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption("Script has already been executed",true)
     error(" ")
@@ -87,15 +86,13 @@ game:GetService("TextChatService").OnIncomingMessage = function(Message: TextCha
 		if player == 7471771361 then
 			Message.PrefixText = " <font color='#FD018B'>[Recreation owner]</font> " .. Message.PrefixText
 		end
-		if player == 5831914469 then
-			Message.PrefixText = " <font color='#01FD9C'>[Playtester]</font> " .. Message.PrefixText
+		if player == 5831914469 or player == 371623915 then
+			Message.PrefixText = " <font color='#01FF6F'>[Admin]</font> " .. Message.PrefixText
 		end
 	end
 end
 
 local jobid = string.gsub(game.JobId, "%D", "") / 1000000000000
-
-if _G.CustomSeed ~= nil then Jobid = _G.CustomSeed end
 
 print(jobid)
 
@@ -544,7 +541,7 @@ game.ReplicatedStorage.GameData.LatestRoom.Changed:connect(function(newvalue)
                                     obj.Volume = 0
                                 end
                             end
-                            game:GetService("TweenService"):Create(game.Workspace.CurrentCamera, TweenInfo.new(0.7,Enum.EasingStyle.Sine,Enum.EasingDirection.Out), {CFrame = CFrame.lookAt(game.workspace.currentCamera.CFrame.Position, Threat.Position)}):Play()
+                            game:GetService("TweenService"):Create(game.Workspace.CurrentCamera, TweenInfo.new(0.7,Enum.EasingStyle.Sine,Enum.EasingDirection.Out), {CFrame = CFrame.lookAt(game.workspace.currentCamera.CFrame.Position, Threat.Position + Vector3.new(0,1,0))}):Play()
                             local thraetjumpscare = Instance.new("Sound",game.workspace)
                             thraetjumpscare.SoundId = "rbxassetid://7085879559"
                             thraetjumpscare.PlaybackSpeed = 0.7
