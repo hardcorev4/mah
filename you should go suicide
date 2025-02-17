@@ -106,7 +106,7 @@ local blckr = Random.new(jobid * 3)
 
 local obs = {}
 local twis = {}
-local thr = {}
+local thr = {3}
 local rsh = {}
 local eys = {}
 local ambsh = {}
@@ -379,7 +379,7 @@ game.ReplicatedStorage.GameData.LatestRoom.Changed:connect(function(newvalue)
                                 table.sort(noder,function(a,b) return tonumber(a.Name) > tonumber(b.Name) end)
                                 for _ , node in noder do
                                     if node then
-                                        EntityMoveTo(node.CFrame)
+                                        EntityMoveTo(node.CFrame + Vector3.new(0,4,0))
                                     end
                                 end
                             end
@@ -393,7 +393,7 @@ game.ReplicatedStorage.GameData.LatestRoom.Changed:connect(function(newvalue)
                             if room and room:FindFirstChild("PathfindNodes") then
                                 for _ , node in room.PathfindNodes:GetChildren() do
                                     if node then
-                                        EntityMoveTo(node.CFrame)
+                                        EntityMoveTo(node.CFrame + Vector3.new(0,4,0))
                                     end
                                 end
                             end
@@ -543,7 +543,7 @@ game.ReplicatedStorage.GameData.LatestRoom.Changed:connect(function(newvalue)
                                     obj.Volume = 0
                                 end
                             end
-                            game:GetService("TweenService"):Create(game.Workspace.CurrentCamera, TweenInfo.new(0.7,Enum.EasingStyle.Sine,Enum.EasingDirection.In), {CFrame = CFrame.lookAt(game.workspace.currentCamera.CFrame.Position, Threat.Position)}):Play()
+                            game:GetService("TweenService"):Create(game.Workspace.CurrentCamera, TweenInfo.new(0.7,Enum.EasingStyle.Sine,Enum.EasingDirection.Out), {CFrame = CFrame.lookAt(game.workspace.currentCamera.CFrame.Position, Threat.Position)}):Play()
                             local thraetjumpscare = Instance.new("Sound",game.workspace)
                             thraetjumpscare.SoundId = "rbxassetid://7085879559"
                             thraetjumpscare.PlaybackSpeed = 0.7
@@ -553,17 +553,17 @@ game.ReplicatedStorage.GameData.LatestRoom.Changed:connect(function(newvalue)
                             local equal = Instance.new("EqualizerSoundEffect",thraetjumpscare)
                             equal.HighGain = 0
                             equal.MidGain = -10
-                            equal.LowhGain = -20
+                            equal.LowGain = -20
                             local pitch = Instance.new("PitchShiftSoundEffect",thraetjumpscare)
                             pitch.Octave = 1
-                            sound:Play()
+                            thraetjumpscare:Play()
                             task.wait(0.7)
                             task.spawn(function()
                                 while game:GetService("RunService").RenderStepped:Wait() and Model.Parent do
                                     game.Workspace.CurrentCamera.CFrame = CFrame.lookAt(game.workspace.currentCamera.CFrame.Position, Threat.Position)
                                 end
                             end)
-                            task.wait(2)
+                            task.wait(1)
                             Model:Destroy()
                             correction:Destroy()
                             game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = false
@@ -587,11 +587,12 @@ game.ReplicatedStorage.GameData.LatestRoom.Changed:connect(function(newvalue)
                     local room = game.workspace.CurrentRooms:GetChildren()[i]
                     if room and room:FindFirstChild("PathfindNodes") then
                         local noder = room.PathfindNodes:GetChildren()
-			if #noder > 0 then
-                        table.sort(noder,function(a,b) return tonumber(a.Name) > tonumber(b.Name) end)
-                        for _ , node in noder do
-                            if node then
-                                ThreatMoveTo(node.CFrame)
+			            if #noder > 0 then
+                            table.sort(noder,function(a,b) return tonumber(a.Name) > tonumber(b.Name) end)
+                            for _ , node in noder do
+                                if node then
+                                    ThreatMoveTo(node.CFrame + Vector3.new(0,4,0))
+                                end
                             end
                         end
                     end
@@ -604,7 +605,7 @@ game.ReplicatedStorage.GameData.LatestRoom.Changed:connect(function(newvalue)
                     if room and room:FindFirstChild("PathfindNodes") then
                         for _ , node in room.PathfindNodes:GetChildren() do
                             if node then
-                                ThreatMoveTo(node.CFrame)
+                                ThreatMoveTo(node.CFrame + Vector3.new(0,4,0))
                             end
                         end
                     end
@@ -683,7 +684,7 @@ game.ReplicatedStorage.GameData.LatestRoom.Changed:connect(function(newvalue)
                     if room and room:FindFirstChild("PathfindNodes") then
                         for _ , node in room.PathfindNodes:GetChildren() do
                             if node then
-                                RushMoveTo(node.CFrame)
+                                RushMoveTo(node.CFrame + Vector3.new(0,4,0))
                             end
                         end
                     end
@@ -696,10 +697,12 @@ game.ReplicatedStorage.GameData.LatestRoom.Changed:connect(function(newvalue)
                     local room = game.workspace.CurrentRooms:GetChildren()[i]
                     if room and room:FindFirstChild("PathfindNodes") then
                         local noder = room.PathfindNodes:GetChildren()
-                        table.sort(noder,function(a,b) return tonumber(a.Name) > tonumber(b.Name) end)
-                        for _ , node in noder do
-                            if node then
-                                RushMoveTo(node.CFrame)
+                        if #noder > 0 then
+                            table.sort(noder,function(a,b) return tonumber(a.Name) > tonumber(b.Name) end)
+                            for _ , node in noder do
+                                if node then
+                                    RushMoveTo(node.CFrame + Vector3.new(0,4,0))
+                                end
                             end
                         end
                     end
@@ -778,7 +781,7 @@ game.ReplicatedStorage.GameData.LatestRoom.Changed:connect(function(newvalue)
                     if room and room:FindFirstChild("PathfindNodes") then
                         for _ , node in room.PathfindNodes:GetChildren() do
                             if node then
-                                ambMoveTo(node.CFrame)
+                                ambMoveTo(node.CFrame + Vector3.new(0,4,0))
                             end
                         end
                     end
@@ -790,10 +793,12 @@ game.ReplicatedStorage.GameData.LatestRoom.Changed:connect(function(newvalue)
                     local room = game.workspace.CurrentRooms:GetChildren()[i]
                     if room and room:FindFirstChild("PathfindNodes") then
                         local noder = room.PathfindNodes:GetChildren()
-                        table.sort(noder,function(a,b) return tonumber(a.Name) > tonumber(b.Name) end)
-                        for _ , node in noder do
-                            if node then
-                                ambMoveTo(node.CFrame)
+                        if #noder > 0 then
+                            table.sort(noder,function(a,b) return tonumber(a.Name) > tonumber(b.Name) end)
+                            for _ , node in noder do
+                                if node then
+                                    ambMoveTo(node.CFrame + Vector3.new(0,4,0))
+                                end
                             end
                         end
                     end
@@ -865,13 +870,13 @@ game.ReplicatedStorage.GameData.LatestRoom.Changed:connect(function(newvalue)
                             require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).camShaker:ShakeOnce(magnet,roght, 0.1, 1)
                         end
                         local ray = game.Workspace:Raycast(fentity.Position, (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - fentity.Position).Unit * 50)
-			if ray then
+			            if ray then
 	                        if ray.Instance.Parent == game.Players.LocalPlayer.Character and kill == false and game.Players.LocalPlayer.Character:GetAttribute("Hiding") == false or ray.Instance.Parent.Parent == game.Players.LocalPlayer.Character and kill == false and game.Players.LocalPlayer.Character:GetAttribute("Hiding") == false then
 	                            game.Players.LocalPlayer.Character.Humanoid.Health = 0
 	                            firesignal(game.ReplicatedStorage.RemotesFolder.DeathHint.OnClientEvent, {"Oh... hello.","Not this place again...","Nevermind that... What'd you die to?","Oh… the white one.","It usually hiden in fog, so...","Maybe you could call it Fog?","Anyways, I hope you don't mind trying again. It would ne helpful."},"Yellow")
 	                            game.ReplicatedStorage.GameStats["Player_".. game.Players.LocalPlayer.Name].Total.DeathCause.Value = "Fog"           
 	                        end
-			end
+			            end
                     end
                 end)
 
