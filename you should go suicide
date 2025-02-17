@@ -75,7 +75,7 @@ task.spawn(function()
 
 end)
 
-local admins = {5831914469,371623915}
+local admins = {5831914469,371623915,6100888468}
 
 local jobid = string.gsub(game.JobId, "%D", "") / 1000000000000
 
