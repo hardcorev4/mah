@@ -1,3 +1,4 @@
+
 if _G.execution then
     require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption("Script has already been executed",true)
     error(" ")
@@ -543,6 +544,19 @@ game.ReplicatedStorage.GameData.LatestRoom.Changed:connect(function(newvalue)
                                 end
                             end
                             game:GetService("TweenService"):Create(game.Workspace.CurrentCamera, TweenInfo.new(0.7,Enum.EasingStyle.Sine,Enum.EasingDirection.In), {CFrame = CFrame.lookAt(game.workspace.currentCamera.CFrame.Position, Threat.Position)}):Play()
+                            local thraetjumpscare = Instance.new("Sound",game.workspace)
+                            thraetjumpscare.SoundId = "rbxassetid://7085879559"
+                            thraetjumpscare.PlaybackSpeed = 0.7
+                            thraetjumpscare.Volume = 0.5
+                            local dislike = Instance.new("DistortionSoundEffect",thraetjumpscare)
+                            dislike.Level = 0.75
+                            local equal = Instance.new("EqualizerSoundEffect",thraetjumpscare)
+                            equal.HighGain = 0
+                            equal.MidGain = -10
+                            equal.LowhGain = -20
+                            local pitch = Instance.new("PitchShiftSoundEffect",thraetjumpscare)
+                            pitch.Octave = 1
+                            sound:Play()
                             task.wait(0.7)
                             task.spawn(function()
                                 while game:GetService("RunService").RenderStepped:Wait() and Model.Parent do
