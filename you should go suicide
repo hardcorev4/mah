@@ -325,6 +325,196 @@ game:GetService("TextChatService").OnIncomingMessage = function(Message: TextCha
                     correction:Destroy()
                 end)
             end
+            if message == "/obsession" then
+                task.spawn(function()
+                    if game.Workspace:FindFirstChild("SeekMovingNewClone") then return end
+                    task.wait(1)
+                    local lastroom = game.Workspace.CurrentRooms:GetChildren()[#game.Workspace.CurrentRooms:GetChildren() -1]
+                    local obessionn = LoadCustomInstance("https://github.com/Jahani-john/mayhem-mode/raw/refs/heads/main/mayhemmode-main/Greed.Obssesion.rbxm", "Obession_model")
+                    obessionn.Parent = game.Workspace
+                    local obession = obessionn.ObsessionNew
+                    obession.CFrame = lastroom.Parts.Floor.CFrame + Vector3.new(0,5,0)
+
+                    for _ , room in game.Workspace.CurrentRooms:GetChildren() do
+                        room:SetAttribute("Ambient",Color3.fromRGB(0,0,0))
+                        for _ , v in room:GetDescendants() do
+                            if v:IsA("PointLight") or v:IsA("SpotLight") or v:IsA("SurfaceLight") or v.Name == "Neon" then
+                                v:Destroy()
+                            end
+                        end
+                    end
+                    task.spawn(function()
+                        while obessionn.Parent and task.wait(0.1) do
+                            local _ , rar = game.Workspace.CurrentCamera:WorldToViewportPoint(obession.Position)
+                            if not rar then
+                                game.Players.LocalPlayer.Character.Humanoid:TakeDamage(5)
+                                firesignal(game.ReplicatedStorage.RemotesFolder.DeathHint.OnClientEvent, {"Oh... hello.","Not this place again...","Nevermind that... What'd you die to?","Oh... that thing.","It really wants attention","Maybe you could call it Obsession?","Anyways, I hope you don't mind trying again. It would ne helpful."},"Yellow")
+                                game.ReplicatedStorage.GameStats["Player_".. game.Players.LocalPlayer.Name].Total.DeathCause.Value = "Obsession"
+                            end
+                        end
+                    end)
+
+                    game.ReplicatedStorage.GameData.LatestRoom.Changed:wait()
+                    obessionn:Destroy()
+                end)
+            end
+            if message == "/rush" then
+                task.spawn(function()
+                    if game.Workspace:FindFirstChild("SeekMovingNewClone") then return end
+                    task.wait(1)
+
+                    for _ , v in game.Workspace.CurrentRooms:GetChildren() do
+                        task.spawn(function()
+                            require(game.ReplicatedStorage.ClientModules.Module_Events).flicker(v, 1)
+                        end)
+                    end
+
+                    local kill = false
+
+                    local rTwistering = LoadCustomInstance("https://github.com/Jahani-john/mayhem-mode/raw/refs/heads/main/mayhemmode-main/NMRush.rbxm", "Maniacrush_model")
+
+                    rTwistering.Parent = game.Workspace
+
+                    local rtwister = rTwistering.RushNew
+
+                    rtwister.CFrame = game.Workspace.CurrentRooms:GetChildren()[1].RoomEntrance.CFrame
+
+                    function RushMoveTo(cframe)
+                        local reached = false
+                        local connection; connection = game:GetService("RunService").Stepped:Connect(function(_, step)
+                            local pivot = rtwister:GetPivot()
+                            local difference = (cframe.Position - pivot.Position)
+                            local unit = difference.Unit
+                            local magnitude = difference.Magnitude
+
+                            if magnitude > 0.1 then
+                                rtwister:PivotTo(pivot + unit * math.min(step * 85, magnitude))
+                            else
+                                connection:Disconnect()
+                                reached = true
+                            end
+                        end)
+                        repeat game:GetService("RunService").Stepped:Wait() until reached
+                    end
+
+                    task.spawn(function()
+                        while rTwistering.Parent and task.wait() do
+                            local distance = (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - rtwister.Position).magnitude
+                            if distance < 100 then
+                                require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).camShaker:ShakeOnce(5/100*(100 - distance), 20/100*(100 - distance), 0.1, 1)
+                            end
+                            local ray = game.Workspace:Raycast(rtwister.Position, (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - rtwister.Position).Unit * 50)
+                            if ray then
+                                if ray.Instance.Parent == game.Players.LocalPlayer.Character and IsAlive() == true and game.Players.LocalPlayer.Character:GetAttribute("Hiding") == false or ray.Instance.Parent.Parent == game.Players.LocalPlayer.Character and IsAlive() == true and game.Players.LocalPlayer.Character:GetAttribute("Hiding") == false then
+                                    kill = true
+                                    game.Players.LocalPlayer.Character.Humanoid.Health = 0
+                                    game.ReplicatedStorage.GameStats["Player_".. game.Players.LocalPlayer.Name].Total.DeathCause.Value = "Maniac rush"
+                                end
+                            end
+                        end
+                    end)
+
+                    task.wait(5)
+
+                        for i = 1,#game.workspace.CurrentRooms:GetChildren(),1 do
+                            local room = game.workspace.CurrentRooms:GetChildren()[i]
+                            require(game.ReplicatedStorage.ClientModules.Module_Events).shatter(room)
+                            if room and room:FindFirstChild("PathfindNodes") then
+                                for _ , node in room.PathfindNodes:GetChildren() do
+                                    if node then
+                                        RushMoveTo(node.CFrame + Vector3.new(0,4,0))
+                                    end
+                                end
+                            end
+                            if room and room:FindFirstChild("RoomExit") then
+                                RushMoveTo(room.RoomExit.CFrame)
+                            end
+                        end
+                        task.wait(2)
+                        for i = #game.workspace.CurrentRooms:GetChildren(),1,-1 do
+                            local room = game.workspace.CurrentRooms:GetChildren()[i]
+                            if room and room:FindFirstChild("PathfindNodes") then
+                                local noder = room.PathfindNodes:GetChildren()
+                                if #noder > 0 then
+                                    table.sort(noder,function(a,b) return tonumber(a.Name) > tonumber(b.Name) end)
+                                    for _ , node in noder do
+                                        if node then
+                                            RushMoveTo(node.CFrame + Vector3.new(0,4,0))
+                                        end
+                                    end
+                                end
+                            end
+                            if room and room:FindFirstChild("RoomEntrance") then
+                                RushMoveTo(room.RoomEntrance.CFrame)
+                            end
+                        end
+
+                    rTwistering:Destroy()
+                end)
+            end
+            if message == "/blackout" then
+                task.spawn(function()
+                    if game.Workspace:FindFirstChild("SeekMovingNewClone") then return end
+                    local damaged = false
+
+                    local ui = game.CoreGui.ContactList
+                    local frame = Instance.new("Frame",ui)
+                    frame.Size = UDim2.new(0,10000,0,10000)
+                    frame.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+                    local image = Instance.new("ImageLabel",ui)
+                    image.Position = UDim2.new(0,750,0,410)
+                    image.Size = UDim2.new(0,750,0,710)
+                    image.AnchorPoint = Vector2.new(0.5,0.5)
+                    image.Image = "rbxassetid://73478163987988"
+                    image.BorderSizePixel = 0
+                    image.Visible = false
+                    local sound = Instance.new("Sound",game.Workspace)
+                    sound.SoundId = "rbxassetid://8316701225"
+                    sound:Play()
+                    local soundj = Instance.new("Sound",game.Workspace)
+                    soundj.SoundId = "rbxassetid://176554627"
+                    soundj.Volume = 0.5
+                    soundj.Looped = true
+
+                    task.wait(1)
+
+                    task.spawn(function()
+                        while task.wait() and damaged == false do
+                            if game.Players.LocalPlayer.Character.Humanoid.MoveDirection.Magnitude > 0 then
+                                damaged = true
+                                local soundjump = Instance.new("Sound",game.Workspace)
+                                soundjump.SoundId = "rbxassetid://8991674830"
+                                soundjump.Volume = 2
+                                soundjump:Play()
+                                image.Visible = true
+                                task.wait(1)
+                                image.Size = UDim2.new(0,1550,0,1100)
+                                task.wait(1.8)
+                                game.Players.LocalPlayer.Character.Humanoid:TakeDamage(100)
+                                firesignal(game.ReplicatedStorage.RemotesFolder.DeathHint.OnClientEvent, {"Oh... hello.","Not this place again...","Nevermind that... What'd you die to?","Oh... that thing.","It usually comes with a blackout, so","Maybe you could call it Blackout?","Anyways, I hope you don't mind trying again. It would ne helpful."},"Yellow")
+                                game.ReplicatedStorage.GameStats["Player_".. game.Players.LocalPlayer.Name].Total.DeathCause.Value = "Blackout"
+                                soundjump:Destroy()
+                                frame:Destroy()
+                                image:Destroy()
+                                sound:Destroy()
+                                soundj:Destroy()       
+                            end
+                        end
+                    end)
+
+                    task.wait(3)
+                    soundj:Play()
+
+                    task.wait(5)
+
+                    frame:Destroy()
+                    image:Destroy()
+                    soundj:Destroy()
+                    sound:Destroy()
+
+                    damaged = true
+                end)
+            end
         end
 	end
 
