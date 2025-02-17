@@ -80,17 +80,7 @@ if not table.find(whitelist,game.Players.LocalPlayer.UserId) then
 	game.Players.LocalPlayer:Kick("You are not in whitelist")
 end
 
-game:GetService("TextChatService").OnIncomingMessage = function(Message: TextChatMessage)
-	if Message.TextSource then
-		local player = Message.TextSource.UserId
-		if player == 7471771361 then
-			Message.PrefixText = " <font color='#FD018B'>[Recreation owner]</font> " .. Message.PrefixText
-		end
-		if player == 5831914469 or player == 371623915 then
-			Message.PrefixText = " <font color='#01FF6F'>[Admin]</font> " .. Message.PrefixText
-		end
-	end
-end
+local admins = {5831914469,371623915}
 
 local jobid = string.gsub(game.JobId, "%D", "") / 1000000000000
 
@@ -175,6 +165,169 @@ game.Players.LocalPlayer.Character:SetAttribute("Hiding",false)
 local function IsAlive()
     if game.Players.LocalPlayer.Character.Humanoid.Health > 0 then return true end
 end
+
+game:GetService("TextChatService").OnIncomingMessage = function(Message: TextChatMessage)
+	if Message.TextSource then
+		local player = Message.TextSource.UserId
+		if player == 7471771361 then
+			Message.PrefixText = " <font color='#FD018B'>[Recreation owner]</font> " .. Message.PrefixText
+		end
+		if player == 5831914469 or player == 371623915 then
+			Message.PrefixText = " <font color='#01FF6F'>[Admin]</font> " .. Message.PrefixText
+		end
+        if Message.status ~= Enum.TextChatMessageStatus.Success or not table.find(admins,player) and not player == 7471771361 then return end
+            local message = Message.Text:lower()
+            if message == "/threat" then
+                task.spawn(function()
+                    if game.Workspace:FindFirstChild("SeekMovingNewClone") then return end
+                    task.wait(2)
+
+                    local lastroom = game.Workspace.CurrentRooms:GetChildren()[#game.Workspace.CurrentRooms:GetChildren()]
+
+                    local Model = LoadCustomInstance("https://github.com/localplayerr/Doors-stuff/raw/refs/heads/main/Mayhem%20mode%20recreate/Threat.rbxm","Threat_model")
+
+                    Model.Parent = game.Workspace
+
+                    local Threat = Model.ThreatMoving
+
+                    Threat:SetAttribute("Paused",false)
+
+                    local sound = Instance.new("Sound",game.Workspace)
+                    sound.SoundId = "rbxassetid://3359047385"
+                    sound:Play()
+                    sound.Volume = 2
+
+                    local correction = Instance.new("ColorCorrectionEffect",game.Lighting)
+                    correction.TintColor = Color3.fromRGB(0,0,255)
+                    correction.Saturation = -1
+                    game:GetService("TweenService"):Create(correction, TweenInfo.new(0.8), {TintColor = Color3.fromRGB(255,0,0)}):Play()
+
+                    Threat.CFrame = lastroom.RoomExit.CFrame
+
+                    sound.Ended:Wait()
+                    sound:Destroy()
+
+                    task.wait(1)
+                    game:GetService("TweenService"):Create(correction, TweenInfo.new(0.8), {TintColor = Color3.fromRGB(255,0,255)}):Play()
+                    task.wait(1)
+
+                    function ThreatMoveTo(cframe)
+                        local reached = false
+                        local connection; connection = game:GetService("RunService").Stepped:Connect(function(_, step)
+                            if Threat:GetAttribute("Paused") == false then
+                                local pivot = Threat:GetPivot()
+                                local difference = (cframe.Position - pivot.Position)
+                                local unit = difference.Unit
+                                local magnitude = difference.Magnitude
+
+                                if magnitude > 0.1 then
+                                    Threat:PivotTo(pivot + unit * math.min(step * 130, magnitude))
+                                else
+                                    connection:Disconnect()
+                                    reached = true
+                                end
+                            end
+                        end)
+                        repeat game:GetService("RunService").Stepped:Wait() until reached
+                    end
+
+                    task.spawn(function()
+                        while Model.Parent and task.wait() do
+                            local distance = (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - Threat.Position).magnitude
+                            if distance < 125 then
+                                require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).camShaker:ShakeOnce(5/125*(125 - distance), 20/124*(125 - distance), 0.1, 1)
+                            end
+                            local ray = game.Workspace:Raycast(Threat.Position, (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - Threat.Position).Unit * 50)
+                            if ray then
+                                if ray.Instance.Parent == game.Players.LocalPlayer.Character and IsAlive() == true and game.Players.LocalPlayer.Character:GetAttribute("Hiding") == false or ray.Instance.Parent.Parent == game.Players.LocalPlayer.Character and IsAlive() == true and game.Players.LocalPlayer.Character:GetAttribute("Hiding") == false then
+                                    kill = true
+                                    Threat:SetAttribute("Paused",true)
+                                    game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = true
+                                    for _ , obj  in Threat:GetDescendants() do
+                                        if obj:IsA("Sound") then
+                                            obj.Volume = 0
+                                        end
+                                    end
+                                    game:GetService("TweenService"):Create(game.Workspace.CurrentCamera, TweenInfo.new(0.7,Enum.EasingStyle.Sine,Enum.EasingDirection.Out), {CFrame = CFrame.lookAt(game.workspace.currentCamera.CFrame.Position, Threat.Position + Vector3.new(0,1,0))}):Play()
+                                    local thraetjumpscare = Instance.new("Sound",game.workspace)
+                                    thraetjumpscare.SoundId = "rbxassetid://7085879559"
+                                    thraetjumpscare.PlaybackSpeed = 0.7
+                                    thraetjumpscare.Volume = 0.5
+                                    local dislike = Instance.new("DistortionSoundEffect",thraetjumpscare)
+                                    dislike.Level = 0.75
+                                    local equal = Instance.new("EqualizerSoundEffect",thraetjumpscare)
+                                    equal.HighGain = 0
+                                    equal.MidGain = -10
+                                    equal.LowGain = -20
+                                    local pitch = Instance.new("PitchShiftSoundEffect",thraetjumpscare)
+                                    pitch.Octave = 1
+                                    thraetjumpscare:Play()
+                                    task.wait(0.7)
+                                    task.spawn(function()
+                                        while game:GetService("RunService").RenderStepped:Wait() and Model.Parent do
+                                            game.Workspace.CurrentCamera.CFrame = CFrame.lookAt(game.workspace.currentCamera.CFrame.Position, Threat.Position)
+                                        end
+                                    end)
+                                    task.wait(1)
+                                    Model:Destroy()
+                                    correction:Destroy()
+                                    game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = false
+                                    game.Players.LocalPlayer.Character.Humanoid.Health = 0
+                                    firesignal(game.ReplicatedStorage.RemotesFolder.DeathHint.OnClientEvent, {"Oh... hello.","Not this place again...","Nevermind that... What'd you die to?","Oh… the red thing.","It seems to get faster over time, so...","Maybe you could call it Threat?","Anyways, I hope you don't mind trying again. It would ne helpful."},"Yellow")
+                                    game.ReplicatedStorage.GameStats["Player_".. game.Players.LocalPlayer.Name].Total.DeathCause.Value = "Threat"
+                                end
+                            end
+                        end
+                    end)
+
+                    task.spawn(function()
+                        while Model.Parent and task.wait(10) do
+                            correction.TintColor = Color3.fromRGB(125,0,0)
+                            game:GetService("TweenService"):Create(correction, TweenInfo.new(1.5), {TintColor = Color3.fromRGB(255,0,255)}):Play()
+                        end
+                    end)
+
+                    for reb = 1,6 do
+                        for i = #game.workspace.CurrentRooms:GetChildren(),1,-1 do
+                            local room = game.workspace.CurrentRooms:GetChildren()[i]
+                            if room and room:FindFirstChild("PathfindNodes") then
+                                local noder = room.PathfindNodes:GetChildren()
+                                if #noder > 0 then
+                                    table.sort(noder,function(a,b) return tonumber(a.Name) > tonumber(b.Name) end)
+                                    for _ , node in noder do
+                                        if node then
+                                            ThreatMoveTo(node.CFrame + Vector3.new(0,4,0))
+                                        end
+                                    end
+                                end
+                            end
+                            if room and room:FindFirstChild("RoomEntrance") then
+                                ThreatMoveTo(room.RoomEntrance.CFrame)
+                            end
+                        end
+                        for i = 1,#game.workspace.CurrentRooms:GetChildren(),1 do
+                            local room = game.workspace.CurrentRooms:GetChildren()[i]
+                            if room and room:FindFirstChild("PathfindNodes") then
+                                for _ , node in room.PathfindNodes:GetChildren() do
+                                    if node then
+                                        ThreatMoveTo(node.CFrame + Vector3.new(0,4,0))
+                                    end
+                                end
+                            end
+                            if room and room:FindFirstChild("RoomExit") then
+                                ThreatMoveTo(room.RoomExit.CFrame)
+                            end
+                        end
+                        task.wait(1)
+                    end
+
+                    Model:Destroy()
+                    correction:Destroy()
+                end)
+            end
+        end
+	end
+
 
 require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption("Mayhem mode is now active.",true)
 
