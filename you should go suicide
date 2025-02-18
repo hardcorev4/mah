@@ -273,7 +273,7 @@ game:GetService("TextChatService").OnIncomingMessage = function(Message: TextCha
                             local room = game.workspace.CurrentRooms:GetChildren()[i]
                             if room and room:FindFirstChild("PathfindNodes") then
                                 local noder = room.PathfindNodes:GetChildren()
-                                if #noder > 0 then
+                                if #noder > 1 then
                                     table.sort(noder,function(a,b) return tonumber(a.Name) > tonumber(b.Name) end)
                                     for _ , node in noder do
                                         if node then
@@ -418,7 +418,7 @@ game:GetService("TextChatService").OnIncomingMessage = function(Message: TextCha
                             local room = game.workspace.CurrentRooms:GetChildren()[i]
                             if room and room:FindFirstChild("PathfindNodes") then
                                 local noder = room.PathfindNodes:GetChildren()
-                                if #noder > 0 then
+                                if #noder > 1 then
                                     table.sort(noder,function(a,b) return tonumber(a.Name) > tonumber(b.Name) end)
                                     for _ , node in noder do
                                         if node then
@@ -713,12 +713,14 @@ game.ReplicatedStorage.GameData.LatestRoom.Changed:connect(function(newvalue)
                             require(game.ReplicatedStorage.ClientModules.Module_Events).shatter(room)
                             if room and room:FindFirstChild("PathfindNodes") then
                                 local noder = room.PathfindNodes:GetChildren()
-                                table.sort(noder,function(a,b) return tonumber(a.Name) > tonumber(b.Name) end)
-                                for _ , node in noder do
-                                    if node then
-                                        EntityMoveTo(node.CFrame + Vector3.new(0,4,0))
-                                    end
-                                end
+				if #noder > 1 then
+	                                table.sort(noder,function(a,b) return tonumber(a.Name) > tonumber(b.Name) end)
+	                                for _ , node in noder do
+	                                    if node then
+	                                        EntityMoveTo(node.CFrame + Vector3.new(0,4,0))
+	                                    end
+	                                end
+				end
                             end
                             if room and room:FindFirstChild("RoomEntrance") then
                                 EntityMoveTo(room.RoomEntrance.CFrame)
@@ -922,7 +924,7 @@ game.ReplicatedStorage.GameData.LatestRoom.Changed:connect(function(newvalue)
                     local room = game.workspace.CurrentRooms:GetChildren()[i]
                     if room and room:FindFirstChild("PathfindNodes") then
                         local noder = room.PathfindNodes:GetChildren()
-			            if #noder > 0 then
+			            if #noder > 1 then
                             table.sort(noder,function(a,b) return tonumber(a.Name) > tonumber(b.Name) end)
                             for _ , node in noder do
                                 if node then
@@ -1032,7 +1034,7 @@ game.ReplicatedStorage.GameData.LatestRoom.Changed:connect(function(newvalue)
                     local room = game.workspace.CurrentRooms:GetChildren()[i]
                     if room and room:FindFirstChild("PathfindNodes") then
                         local noder = room.PathfindNodes:GetChildren()
-                        if #noder > 0 then
+                        if #noder > 1 then
                             table.sort(noder,function(a,b) return tonumber(a.Name) > tonumber(b.Name) end)
                             for _ , node in noder do
                                 if node then
@@ -1128,7 +1130,7 @@ game.ReplicatedStorage.GameData.LatestRoom.Changed:connect(function(newvalue)
                     local room = game.workspace.CurrentRooms:GetChildren()[i]
                     if room and room:FindFirstChild("PathfindNodes") then
                         local noder = room.PathfindNodes:GetChildren()
-                        if #noder > 0 then
+                        if #noder > 1 then
                             table.sort(noder,function(a,b) return tonumber(a.Name) > tonumber(b.Name) end)
                             for _ , node in noder do
                                 if node then
