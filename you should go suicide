@@ -329,8 +329,10 @@ game:GetService("TextChatService").OnIncomingMessage = function(Message: TextCha
                             local _ , rar = game.Workspace.CurrentCamera:WorldToViewportPoint(obession.Position)
                             if not rar then
                                 game.Players.LocalPlayer.Character.Humanoid:TakeDamage(5)
-                                firesignal(game.ReplicatedStorage.RemotesFolder.DeathHint.OnClientEvent, {"Oh... hello.","Not this place again...","Nevermind that... What'd you die to?","Oh... that thing.","It really wants attention","Maybe you could call it Obsession?","Anyways, I hope you don't mind trying again. It would ne helpful."},"Yellow")
-                                game.ReplicatedStorage.GameStats["Player_".. game.Players.LocalPlayer.Name].Total.DeathCause.Value = "Obsession"
+				if IsAlive() ~= true then
+	                                firesignal(game.ReplicatedStorage.RemotesFolder.DeathHint.OnClientEvent, {"Oh... hello.","Not this place again...","Nevermind that... What'd you die to?","Oh... that thing.","It really wants attention","Maybe you could call it Obsession?","Anyways, I hope you don't mind trying again. It would ne helpful."},"Yellow")
+	                                game.ReplicatedStorage.GameStats["Player_".. game.Players.LocalPlayer.Name].Total.DeathCause.Value = "Obsession"
+				end
                             end
                         end
                     end)
@@ -539,8 +541,10 @@ game.ReplicatedStorage.GameData.LatestRoom.Changed:connect(function(newvalue)
                     local _ , rar = game.Workspace.CurrentCamera:WorldToViewportPoint(obession.Position)
                     if not rar then
                         game.Players.LocalPlayer.Character.Humanoid:TakeDamage(5)
-                        firesignal(game.ReplicatedStorage.RemotesFolder.DeathHint.OnClientEvent, {"Oh... hello.","Not this place again...","Nevermind that... What'd you die to?","Oh... that thing.","It really wants attention","Maybe you could call it Obsession?","Anyways, I hope you don't mind trying again. It would ne helpful."},"Yellow")
-                        game.ReplicatedStorage.GameStats["Player_".. game.Players.LocalPlayer.Name].Total.DeathCause.Value = "Obsession"
+			if IsAlive() ~= true then
+	                	firesignal(game.ReplicatedStorage.RemotesFolder.DeathHint.OnClientEvent, {"Oh... hello.","Not this place again...","Nevermind that... What'd you die to?","Oh... that thing.","It really wants attention","Maybe you could call it Obsession?","Anyways, I hope you don't mind trying again. It would ne helpful."},"Yellow")
+	                        game.ReplicatedStorage.GameStats["Player_".. game.Players.LocalPlayer.Name].Total.DeathCause.Value = "Obsession"
+			end
                     end
                 end
             end)
