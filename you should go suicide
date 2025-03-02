@@ -156,7 +156,7 @@ game:GetService("TextChatService").OnIncomingMessage = function(Message: TextCha
 		if table.find(admins,player) then
 			Message.PrefixText = " <font color='#01FF6F'>[Admin]</font> " .. Message.PrefixText
 		end
-                if player == 6117417527 then Message.PrefixText = " <font color='#00ffff'>[Loh]</font> " .. Message.PrefixText end
+                if player == 6117417527 then Message.PrefixText = " <font color='#00ffff'>[The tupoi loh one]</font> " .. Message.PrefixText end
         if Message.status ~= Enum.TextChatMessageStatus.Success or not table.find(admins,player) and not player == 7471771361 then return end
             local message = Message.Text:lower()
             if message == "/threat" then
