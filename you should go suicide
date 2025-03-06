@@ -398,7 +398,7 @@ game:GetService("TextChatService").OnIncomingMessage = function(Message: TextCha
                         end
                     end)
 
-                    task.wait(5)
+                    task.wait(4)
 
                         for i = 1,#game.workspace.CurrentRooms:GetChildren(),1 do
                             local room = game.workspace.CurrentRooms:GetChildren()[i]
@@ -1014,7 +1014,7 @@ game.ReplicatedStorage.GameData.LatestRoom.Changed:connect(function(newvalue)
                 end
             end)
 
-            task.wait(5)
+            task.wait(4)
 
                 for i = 1,#game.workspace.CurrentRooms:GetChildren(),1 do
                     local room = game.workspace.CurrentRooms:GetChildren()[i]
