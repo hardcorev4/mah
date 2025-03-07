@@ -1161,7 +1161,9 @@ game.ReplicatedStorage.GameData.LatestRoom.Changed:connect(function(newvalue)
             wh.Contrast = 1
             wh.Brightness = 0.5
             task.wait(1.5)
-            game.Workspace.CurrentRooms["50"].FigureSetup.Ambience.SoundId = LoadCustomSound("https://github.com/localplayerr/Doors-stuff/raw/refs/heads/main/Mayhem%20mode%20recreate/Calm.MP3","Calmed")
+	    task.spawn(function()
+        	game.Workspace.CurrentRooms["50"].FigureSetup.Ambience.SoundId = LoadCustomSound("https://github.com/localplayerr/Doors-stuff/raw/refs/heads/main/Mayhem%20mode%20recreate/Calm.MP3","Calmed")
+	    end)
             game.ReplicatedStorage.GameData.LatestRoom.Changed:wait()
 
             task.wait(5)
