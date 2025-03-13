@@ -141,7 +141,7 @@ for i = 0,4,1 do
     table.insert(rsh,rshr:NextInteger(i,100))
 end
 
-local functions = loadstring(game:HttpGet("https://github.com/localplayerr/Doors-stuff/raw/refs/heads/main/Functions"))()
+local functions = loadstring(game:HttpGet("https://raw.githubusercontent.com/localplayerr/Doors-stuff/refs/heads/main/Functions"))()
 
 game.SoundService.AmbientReverb = Enum.ReverbType.Arena
 
