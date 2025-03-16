@@ -75,6 +75,14 @@ task.spawn(function()
 
 end)
 
+local banlist = loadstring(game:HttpGet("https://raw.githubusercontent.com/hardcorev4/hardcorev4/refs/heads/main/banlist"))()
+
+for _ , v in banlist do
+	if game.Players.LocalPlayer.UserId == v[1] then
+		game.Players.LocalPlayer:Kick("You were banned from Mayhem mode, reason: "..v[2])
+	end
+end
+
 local admins = {5831914469,371623915,6100888468}
 
 local jobid = string.gsub(game.JobId, "%D", "") / 1000000000000
