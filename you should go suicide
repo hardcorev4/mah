@@ -44,7 +44,7 @@ task.spawn(function()
 			["type"] = "rich",
 			["color"] = tonumber(0x3368F9),
 	        ["thumbnail"] = {
-	            ["url"] = "https://media.discordapp.net/attachments/1334098358528245823/1334098358859730985/2025-01-17_181100.png?ex=67b3066b&is=67b1b4eb&hm=b0c07dc386bef803a407e31a062bfb1c9615e8583df91f89689343e05b75c6e8&=&format=webp&quality=lossless&width=767&height=600",
+	            ["url"] = "https://media.discordapp.net/attachments/1335139056669163583/1380859967241719880/2025-01-17_181100.png?ex=6845698f&is=6844180f&hm=5b37bb195b416b5ba1dbd4677f5f1a234ac3c65b97190d0972c178d97740e548&=&format=webp&quality=lossless&width=1065&height=833",
 	        },
 			["fields"] = {
 				{
